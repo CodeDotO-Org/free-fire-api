@@ -6,20 +6,37 @@ const { garenaAcc } = require('../utilities/dev');
 // Use the stealth plugin
 puppeteer.use(StealthPlugin());
 
+async function clearSpecificCookie(page, cookieName) {
+  const cookies = await page.cookies();
+  const cookieToDelete = cookies.find((cookie) => cookie.name === cookieName);
+
+  if (cookieToDelete) {
+    await page.deleteCookie(cookieToDelete);
+    page.re;
+    console.log(`Cookie "${cookieName}" cleared.`);
+  } else {
+    console.log(`Cookie "${cookieName}" not found.`);
+  }
+}
+
 async function freeFireApi(app = '100067', item = '44111', userId = '9736578480') {
   const browserURL = 'http://127.0.0.1:9222'; // Remote debugging URL
   let browser;
+  let page;
 
   try {
     // Connect Puppeteer to the existing Chrome instance
     browser = await puppeteer.connect({ browserURL });
 
     // Open a new tab
-    const page = await browser.newPage();
+    page = await browser.newPage();
 
     // Navigate to the target URL
     const url = `https://shop.garena.my/?app=${app}&item=${item}&channel=202070`;
     await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+    // Clear the specific cookie by name
+    await clearSpecificCookie(page, 'session_key');
 
     // Wait for the button using its class (CSS selector)
     await page.waitForSelector('button'); // Ensure buttons are loaded
@@ -138,7 +155,7 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
       console.log('OTP input field not found.');
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 4 seconds
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 4 seconds
 
     // Use evaluate to click the "Login" button again
     await page.evaluate(() => {
@@ -172,6 +189,10 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
       console.log('Make sure Chrome is running with the --remote-debugging-port flag.');
     }
   } finally {
+    if (page) {
+      await page.close();
+    }
+
     if (browser) {
       await browser.disconnect(); // Detach Puppeteer from the browser
     }
