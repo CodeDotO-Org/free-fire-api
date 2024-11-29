@@ -1,7 +1,8 @@
 const speakeasy = require('speakeasy');
+const { garenaAcc } = require('../utilities/dev');
 
 // Main function
-function generateHOTP(secret) {
+function generateHOTP() {
   // Constants
   const INTERVAL = 180;
 
@@ -13,7 +14,7 @@ function generateHOTP(secret) {
 
   // Generate new HOTP code
   const otp = speakeasy.hotp({
-    secret,
+    secret: garenaAcc.key,
     counter: lastInterval,
     encoding: 'base32',
   });

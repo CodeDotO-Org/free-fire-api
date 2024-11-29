@@ -2,7 +2,9 @@ const { freeFireApi } = require('./vm');
 
 async function topupFreeFire(req, res) {
   try {
-    await freeFireApi();
+    const traxId = await freeFireApi();
+
+    console.log(traxId);
 
     res.status(200).json({ status: 200 });
   } catch (error) {

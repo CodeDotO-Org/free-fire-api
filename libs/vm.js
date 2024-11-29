@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const { generateHOTP } = require('./garena');
+const { garenaAcc } = require('../utilities/dev');
 
 // Use the stealth plugin
 puppeteer.use(StealthPlugin());
@@ -35,15 +36,15 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
         console.log('OK button not found');
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 2 seconds
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 2 seconds
 
       // Set the userId in the input field
       const element = await document.querySelector(
         'input[placeholder="Please enter player ID here"]'
       );
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 2 seconds
+        // element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 2 seconds
         element.value = userId; // Assign userId
       }
     }, userId); // Pass userId as the second argument to evaluate
@@ -90,24 +91,22 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
       }
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 4 seconds
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 4 seconds
 
     // Fill in the login form using page.evaluate
-    await page.evaluate(async () => {
+    await page.evaluate(async (garenaAcc) => {
       // Find the username field and set its value
       const usernameField = await document.querySelector(
         'input[placeholder="Garena Username, Email or Phone"]'
       );
       if (usernameField) {
-        usernameField.value = 'sinocoraly3939'; // Replace with your username
+        usernameField.value = garenaAcc.username; // Replace with your username
       }
-
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Waits for 5 seconds
 
       // Find the password field and set its value
       const passwordField = await document.querySelector('input[placeholder="Password"]');
       if (passwordField) {
-        passwordField.value = 'Naruto007?'; // Replace with your password
+        passwordField.value = garenaAcc.password; // Replace with your password
       }
 
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Waits for 5 seconds
@@ -117,7 +116,7 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
       if (loginButton) {
         loginButton.click();
       }
-    });
+    }, garenaAcc);
 
     await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 4 seconds
 
@@ -127,7 +126,7 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
 
     if (otpInputExists) {
       // Generate the OTP in Node.js
-      const otpCode = generateHOTP('FLVJE2QULHXIMSIV');
+      const otpCode = generateHOTP();
 
       // Focus on the OTP input field
       await page.focus(otpInputSelector);
@@ -161,12 +160,12 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
       const transactionElement = document.querySelector('.text-sm\\/\\[22px\\]'); // Corrected selector
       if (transactionElement) {
         const text = transactionElement.textContent; // Get the text content
-        return text;
+        return text.split('ID')[1];
       }
       return null;
     });
 
-    console.log(transactionId); // Log the extracted ID
+    return transactionId;
   } catch (error) {
     console.error('Error:', error.message);
     if (error.message.includes('Failed to open a new tab')) {
