@@ -21,6 +21,7 @@ async function clearSpecificCookie(page, cookieName) {
 
 async function freeFireApi(app = '100067', item = '44111', userId = '9736578480') {
   const browserURL = 'http://127.0.0.1:9222'; // Remote debugging URL
+
   let browser;
   let page;
 
@@ -108,7 +109,7 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
       }
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 4 seconds
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 4 seconds
 
     // Fill in the login form using page.evaluate
     await page.evaluate(async (garenaAcc) => {
@@ -135,7 +136,7 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
       }
     }, garenaAcc);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 4 seconds
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 4 seconds
 
     // Handle OTP input if available
     const otpInputSelector = '[name="ssoOtpCode"]';
