@@ -54,18 +54,37 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
         console.log('OK button not found');
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 2 seconds
+      // await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 2 seconds
 
-      // Set the userId in the input field
-      const element = await document.querySelector(
-        'input[placeholder="Please enter player ID here"]'
-      );
-      if (element) {
-        // element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 2 seconds
-        element.value = userId; // Assign userId
-      }
+      // // Set the userId in the input field
+      // const element = await document.querySelector(
+      //   'input[placeholder="Please enter player ID here"]'
+      // );
+
+      // if (element) {
+      //   // element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      //   // await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 2 seconds
+      //   element.value = userId; // Assign userId
+      // }
     }, userId); // Pass userId as the second argument to evaluate
+
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second
+
+    const loginInputSelector = 'input[placeholder="Please enter player ID here"]';
+    const loginInputExists = await page.$(loginInputSelector);
+
+    if (loginInputExists) {
+      // Generate the OTP in Node.js
+
+      // Focus on the OTP input field
+      await page.focus(loginInputSelector);
+
+      // Simulate typing the OTP into the field
+      await page.type(loginInputSelector, userId);
+      console.log('UID typed successfully.');
+    } else {
+      console.log('UID input field not found.');
+    }
 
     await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second
 
@@ -112,31 +131,74 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
     await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 4 seconds
 
     // Fill in the login form using page.evaluate
-    await page.evaluate(async (garenaAcc) => {
-      // Find the username field and set its value
-      const usernameField = await document.querySelector(
-        'input[placeholder="Garena Username, Email or Phone"]'
-      );
-      if (usernameField) {
-        usernameField.value = garenaAcc.username; // Replace with your username
-      }
+    // await page.evaluate(async (garenaAcc) => {
+    //   // Find the username field and set its value
+    //   const usernameField = await document.querySelector(
+    //     'input[placeholder="Garena Username, Email or Phone"]'
+    //   );
+    //   if (usernameField) {
+    //     usernameField.value = garenaAcc.username; // Replace with your username
+    //   }
 
-      // Find the password field and set its value
-      const passwordField = await document.querySelector('input[placeholder="Password"]');
-      if (passwordField) {
-        passwordField.value = garenaAcc.password; // Replace with your password
-      }
+    //   // Find the password field and set its value
+    //   const passwordField = await document.querySelector('input[placeholder="Password"]');
+    //   if (passwordField) {
+    //     passwordField.value = garenaAcc.password; // Replace with your password
+    //   }
 
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Waits for 5 seconds
+    //   await new Promise((resolve) => setTimeout(resolve, 1000)); // Waits for 5 seconds
 
-      // Find and click the "Login Now" button
-      const loginButton = await document.querySelector('button.primary[type="submit"]');
-      if (loginButton) {
-        loginButton.click();
-      }
-    }, garenaAcc);
+    //   // Find and click the "Login Now" button
+    //   const loginButton = await document.querySelector('button.primary[type="submit"]');
+    //   if (loginButton) {
+    //     loginButton.click();
+    //   }
+    // }, garenaAcc);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 4 seconds
+    const userInputSelector = 'input[placeholder="Garena Username, Email or Phone"]';
+    const userInputExists = await page.$(userInputSelector);
+
+    if (userInputExists) {
+      // Generate the OTP in Node.js
+
+      // Focus on the OTP input field
+      await page.focus(userInputSelector);
+
+      // Simulate typing the OTP into the field
+      await page.type(userInputSelector, garenaAcc.username);
+      console.log('Username typed successfully.');
+    } else {
+      console.log('Username input field not found.');
+    }
+
+    const passInputSelector = 'input[placeholder="Password"]';
+    const passInputExists = await page.$(passInputSelector);
+
+    if (passInputExists) {
+      // Generate the OTP in Node.js
+
+      // Focus on the OTP input field
+      await page.focus(passInputSelector);
+
+      // Simulate typing the OTP into the field
+      await page.type(passInputSelector, garenaAcc.password);
+      console.log('Password typed successfully.');
+    } else {
+      console.log('Password input field not found.');
+    }
+
+    const submitInputSelector = 'button.primary[type="submit"]';
+    const submitInputExists = await page.$(submitInputSelector);
+
+    if (submitInputExists) {
+      await page.click(submitInputSelector);
+
+      console.log('Login typed successfully.');
+    } else {
+      console.log('Login input field not found.');
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 4 seconds
 
     // Handle OTP input if available
     const otpInputSelector = '[name="ssoOtpCode"]';

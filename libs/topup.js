@@ -2,7 +2,7 @@ const { freeFireApi } = require('./vm');
 
 async function topupFreeFire(req, res) {
   try {
-    const { package, userId } = req.params;
+    const { package, userId } = req.query;
 
     const traxId = await freeFireApi('100067', package, userId);
 
