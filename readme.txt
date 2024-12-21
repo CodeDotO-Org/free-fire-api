@@ -10,7 +10,7 @@ Window
 
 Linux
 
-google-chrome --remote-debugging-port=9222 --user-data-dir="/home/your-username/.config/google-chrome"
+google-chrome --no-sandbox --remote-debugging-port=9222 --user-data-dir="/home/your-username/.config/google-chrome"
 
 + User IDs
 - 9736578480
