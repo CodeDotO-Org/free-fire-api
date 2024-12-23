@@ -47,25 +47,25 @@ const clickButtonByText = async (page, text) => {
 
 // Main function
 async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480') {
-  // const browserURL = 'http://127.0.0.1:9222'; // Remote debugging URL
+  const browserURL = 'http://127.0.0.1:9222'; // Remote debugging URL
 
   let browser;
   let page;
 
   try {
     // Launch Puppeteer with stealth settings
-    // browser = await puppeteer.connect({ browserURL });
-    browser = await puppeteer.launch({
-      headless: false, // Set to true for headless mode
-      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Replace with actual Chrome path if required
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-blink-features=AutomationControlled',
-        '--start-maximized',
-      ],
-      defaultViewport: null,
-    });
+    browser = await puppeteer.connect({ browserURL });
+    // browser = await puppeteer.launch({
+    //   headless: false, // Set to true for headless mode
+    //   executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Replace with actual Chrome path if required
+    //   args: [
+    //     '--no-sandbox',
+    //     '--disable-setuid-sandbox',
+    //     '--disable-blink-features=AutomationControlled',
+    //     '--start-maximized',
+    //   ],
+    //   defaultViewport: null,
+    // });
 
     page = await browser.newPage();
 
@@ -206,3 +206,8 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
 }
 
 module.exports = { freeFireApi2 };
+
+// http_proxy="http://43.152.113.55:2333"
+// https_proxy="http://43.152.113.55:2333"
+// ftp_proxy="http://43.152.113.55:2333"
+// no_proxy="localhost,127.0.0.1,::1"
