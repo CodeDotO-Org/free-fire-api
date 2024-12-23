@@ -38,8 +38,8 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
 
   try {
     // Connect Puppeteer to the existing Chrome instance
-    // browser = await puppeteer.connect({ browserURL });
-    browser = await puppeteer.launch({ headless: false });
+    browser = await puppeteer.connect({ browserURL });
+    // browser = await puppeteer.launch({ headless: false });
 
     // Open a new tab
     page = await browser.newPage();
@@ -53,8 +53,8 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
 
     // Navigate to the target URL
     const url = `https://shop.garena.my/?app=${app}&item=${item}&channel=202070`;
-    // await page.goto(url, { waitUntil: 'domcontentloaded' });
-    await page.goto(url, { waitUntil: 'networkidle2' });
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    // await page.goto(url, { waitUntil: 'networkidle2' });
 
     // Clear the specific cookie by name
     await clearSpecificCookie(page, 'session_key');
