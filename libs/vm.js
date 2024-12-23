@@ -1,7 +1,18 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const { generateHOTP } = require('./garena');
+const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 const { garenaAcc } = require('../utilities/dev');
+
+puppeteer.use(
+  RecaptchaPlugin({
+    provider: {
+      id: '2captcha',
+      token: '3b36f1051de5ba74781c5522be886e8b', // REPLACE THIS WITH YOUR OWN 2CAPTCHA API KEY ⚡
+    },
+    visualFeedback: true, // colorize reCAPTCHAs (violet = detected, green = solved)
+  })
+);
 
 // Use the stealth plugin
 puppeteer.use(StealthPlugin());
@@ -27,14 +38,23 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
 
   try {
     // Connect Puppeteer to the existing Chrome instance
-    browser = await puppeteer.connect({ browserURL });
+    // browser = await puppeteer.connect({ browserURL });
+    browser = await puppeteer.launch({ headless: false });
 
     // Open a new tab
     page = await browser.newPage();
 
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
+    );
+    await page.setExtraHTTPHeaders({
+      'accept-language': 'en-US,en;q=0.9',
+    });
+
     // Navigate to the target URL
     const url = `https://shop.garena.my/?app=${app}&item=${item}&channel=202070`;
-    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    // await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.goto(url, { waitUntil: 'networkidle2' });
 
     // Clear the specific cookie by name
     await clearSpecificCookie(page, 'session_key');
