@@ -44,13 +44,6 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
     // Open a new tab
     page = await browser.newPage();
 
-    await page.setUserAgent(
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-    );
-    await page.setExtraHTTPHeaders({
-      'accept-language': 'en-US,en;q=0.9',
-    });
-
     // Navigate to the target URL
     const url = `https://shop.garena.my/?app=${app}&item=${item}&channel=202070`;
     await page.goto(url, { waitUntil: 'domcontentloaded' });

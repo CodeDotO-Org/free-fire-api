@@ -1,10 +1,11 @@
-const { freeFireApi } = require('./vm');
+// const { freeFireApi } = require('./vm');
+const { freeFireApi2 } = require('./vm2');
 
 async function topupFreeFire(req, res) {
   try {
     const { package, userId } = req.query;
 
-    const traxId = await freeFireApi('100067', package, userId);
+    const traxId = await freeFireApi2('100067', package, userId);
 
     console.log(traxId);
 
