@@ -47,25 +47,25 @@ const clickButtonByText = async (page, text) => {
 
 // Main function
 async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480') {
-  const browserURL = 'http://127.0.0.1:9222'; // Remote debugging URL
+  // const browserURL = 'http://127.0.0.1:9222'; // Remote debugging URL
 
   let browser;
   let page;
 
   try {
     // Launch Puppeteer with stealth settings
-    browser = await puppeteer.connect({ browserURL });
-    // browser = await puppeteer.launch({
-    //   headless: false, // Set to true for headless mode
-    //   executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Replace with actual Chrome path if required
-    //   args: [
-    //     '--no-sandbox',
-    //     '--disable-setuid-sandbox',
-    //     '--disable-blink-features=AutomationControlled',
-    //     '--start-maximized',
-    //   ],
-    //   defaultViewport: null,
-    // });
+    // browser = await puppeteer.connect({ browserURL });
+    browser = await puppeteer.launch({
+      headless: false, // Set to true for headless mode
+      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Replace with actual Chrome path if required
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-blink-features=AutomationControlled',
+        '--start-maximized',
+      ],
+      defaultViewport: null,
+    });
 
     page = await browser.newPage();
 
@@ -146,6 +146,8 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     } else {
       console.log('Username input field not found.');
     }
+
+    await delay(2000);
 
     const passInputSelector = 'input[placeholder="Password"]';
     const passInputExists = await page.$(passInputSelector);
