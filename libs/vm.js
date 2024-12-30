@@ -231,7 +231,7 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
       console.log('OTP input field not found.');
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 4 seconds
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 4 seconds
 
     // Use evaluate to click the "Login" button again
     await page.evaluate(() => {
@@ -245,7 +245,7 @@ async function freeFireApi(app = '100067', item = '44111', userId = '9736578480'
       }
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 4 seconds
+    await new Promise((resolve) => setTimeout(resolve, 3000)); // Wait for 4 seconds
 
     // Use page.evaluate to extract the Transaction ID
     const transactionId = await page.evaluate(() => {
