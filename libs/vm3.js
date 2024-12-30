@@ -58,9 +58,9 @@ async function freeFireApi3(app = '100067', item = '44111', userId = '9736578480
     // browser = await puppeteer.connect({ browserURL });
     browser = await puppeteer.launch({
       headless: false, // Set to true for headless mode
-      executablePath: '/usr/bin/google-chrome', // Replace with actual Chrome path if required
+      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // Replace with actual Chrome path if required
       args: [
-        // `--proxy-server=http://brd-customer-hl_3dd67c2f-zone-datacenter_proxy1:u1y86cqaueai@brd.superproxy.io:33335`,
+        `--proxy-server=https://43.152.113.55:2334:u6e306302589f05ef-zone-custom-region-my:u6e306302589f05ef`,
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-blink-features=AutomationControlled',
