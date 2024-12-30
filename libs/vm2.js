@@ -188,15 +188,15 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
 
     // Handle OTP if required
     const otpInputSelector = '[name="ssoOtpCode"]';
-    if (await page.$(otpInputSelector)) {
-      const otpCode = generateHOTP(); // Generate OTP
-      await page.type(otpInputSelector, otpCode, { delay: 100 });
-      console.log('OTP entered.');
+    // if (await page.$(otpInputSelector)) {
+    const otpCode = generateHOTP(); // Generate OTP
+    await page.type(otpInputSelector, otpCode, { delay: 100 });
+    console.log('OTP entered.');
 
-      // Confirm OTP
-      await clickButtonByText(page, 'Confirm');
-      console.log('OTP confirmed.');
-    }
+    // Confirm OTP
+    await clickButtonByText(page, 'Confirm');
+    console.log('OTP confirmed.');
+    // }
 
     await delay(2000);
 
