@@ -198,7 +198,7 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
       console.log('OTP confirmed.');
     }
 
-    await delay(1000);
+    await delay(2000);
 
     // Extract Transaction ID
     const transactionId = await page.evaluate(() => {
