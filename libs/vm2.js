@@ -46,6 +46,7 @@ const clickButtonByText = async (page, text) => {
 };
 
 // Main function
+// https://shop.garena.my/?app=100067&item=44111&channel=202070
 async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480') {
   const browserURL = 'http://127.0.0.1:9222'; // Remote debugging URL
 
@@ -107,6 +108,15 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     // Click "Login" button
     await clickButtonByText(page, 'Login');
     console.log('Login button clicked.');
+
+    await delay(3000);
+
+    const { solved, error } = await page.solveRecaptchas();
+    if (solved) {
+      console.log('CAPTCHA solved successfully.');
+    } else {
+      console.error('CAPTCHA solving failed:', error);
+    }
 
     await delay(1000);
 
@@ -206,8 +216,3 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
 }
 
 module.exports = { freeFireApi2 };
-
-// http_proxy="http://43.152.113.55:2333"
-// https_proxy="http://43.152.113.55:2333"
-// ftp_proxy="http://43.152.113.55:2333"
-// no_proxy="localhost,127.0.0.1,::1"

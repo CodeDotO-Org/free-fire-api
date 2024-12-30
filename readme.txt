@@ -14,3 +14,15 @@ google-chrome --no-sandbox --remote-debugging-port=9222 --user-data-dir="/home/y
 
 + User IDs
 - 9736578480
+
+http_proxy="http://43.152.113.55:2333"
+https_proxy="http://43.152.113.55:2333"
+ftp_proxy="http://43.152.113.55:2333"
+no_proxy="localhost,127.0.0.1,::1"
+
+export HTTP_PROXY=43.152.113.55:2333
+export HTTPS_PROXY=43.152.113.55:2333
+export FTP_PROXY=43.152.113.55:2333
+export NO_PROXY=localhost,127.0.0.1,::1
+
+curl -x http://u6e306302589f05ef-zone-custom:u6e306302589f05ef@43.152.113.55:2333 -I http://example.com
