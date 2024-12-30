@@ -1,20 +1,20 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
+// const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 const { generateHOTP } = require('./garena'); // Ensure this is implemented correctly
 const { garenaAcc } = require('../utilities/dev'); // Ensure credentials are correct
 
 // Configure Puppeteer with plugins
 puppeteer.use(StealthPlugin());
-puppeteer.use(
-  RecaptchaPlugin({
-    provider: {
-      id: '2captcha',
-      token: '3b36f1051de5ba74781c5522be886e8b', // Replace with your actual 2Captcha API key
-    },
-    visualFeedback: true, // Enables visual feedback for reCAPTCHA handling
-  })
-);
+// puppeteer.use(
+//   RecaptchaPlugin({
+//     provider: {
+//       id: '2captcha',
+//       token: '3b36f1051de5ba74781c5522be886e8b', // Replace with your actual 2Captcha API key
+//     },
+//     visualFeedback: true, // Enables visual feedback for reCAPTCHA handling
+//   })
+// );
 
 async function clearSpecificCookie(page, cookieName) {
   const cookies = await page.cookies();
@@ -109,14 +109,14 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     await clickButtonByText(page, 'Login');
     console.log('Login button clicked.');
 
-    await delay(3000);
+    // await delay(3000);
 
-    const { solved, error } = await page.solveRecaptchas();
-    if (solved) {
-      console.log('CAPTCHA solved successfully.');
-    } else {
-      console.error('CAPTCHA solving failed:', error);
-    }
+    // const { solved, error } = await page.solveRecaptchas();
+    // if (solved) {
+    //   console.log('CAPTCHA solved successfully.');
+    // } else {
+    //   console.error('CAPTCHA solving failed:', error);
+    // }
 
     await delay(1000);
 
