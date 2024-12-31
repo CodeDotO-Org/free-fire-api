@@ -121,14 +121,14 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
 
     await delay(1000);
 
-    const { solved, error } = await page.solveRecaptchas();
-    if (solved) {
-      console.log('CAPTCHA solved successfully.');
-    } else {
-      console.error('CAPTCHA solving failed:', error);
-    }
+    // const { solved, error } = await page.solveRecaptchas();
+    // if (solved) {
+    //   console.log('CAPTCHA solved successfully.');
+    // } else {
+    //   console.error('CAPTCHA solving failed:', error);
+    // }
 
-    await delay(1000);
+    // await delay(1000);
 
     await clickButtonByText(page, 'Buy Now');
     console.log('Buy now button clicked.');
