@@ -225,7 +225,7 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
   } catch (error) {
     console.error('Error:', error.message);
   } finally {
-    // if (page) await page.close();
+    if (page) await page.close();
   }
 }
 
