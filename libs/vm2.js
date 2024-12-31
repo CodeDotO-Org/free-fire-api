@@ -16,18 +16,18 @@ puppeteer.use(StealthPlugin());
 //   })
 // );
 
-// async function clearSpecificCookie(page, cookieName) {
-//   const cookies = await page.cookies();
-//   const cookieToDelete = cookies.find((cookie) => cookie.name === cookieName);
+async function clearSpecificCookie(page, cookieName) {
+  const cookies = await page.cookies();
+  const cookieToDelete = cookies.find((cookie) => cookie.name === cookieName);
 
-//   if (cookieToDelete) {
-//     await page.deleteCookie(cookieToDelete);
-//     page.re;
-//     console.log(`Cookie "${cookieName}" cleared.`);
-//   } else {
-//     console.log(`Cookie "${cookieName}" not found.`);
-//   }
-// }
+  if (cookieToDelete) {
+    await page.deleteCookie(cookieToDelete);
+    page.re;
+    console.log(`Cookie "${cookieName}" cleared.`);
+  } else {
+    console.log(`Cookie "${cookieName}" not found.`);
+  }
+}
 
 // Helper function for delay
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -101,13 +101,13 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     if (!okButtonClicked) console.log('OK button not found.');
 
     // Make an API request from the browser context
-    await page.evaluate(async () => {
-      await fetch('https://shop.garena.my/api/auth/logout');
-    });
+    // await page.evaluate(async () => {
+    //   await fetch('https://shop.garena.my/api/auth/logout');
+    // });
 
-    await delay(1000);
+    // await delay(1000);
 
-    await page.reload({ waitUntil: 'networkidle2' });
+    // await page.reload({ waitUntil: 'networkidle2' });
 
     await delay(1000);
 
