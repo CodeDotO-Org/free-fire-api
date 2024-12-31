@@ -16,18 +16,18 @@ puppeteer.use(StealthPlugin());
 //   })
 // );
 
-// async function clearSpecificCookie(page, cookieName) {
-//   const cookies = await page.cookies();
-//   const cookieToDelete = cookies.find((cookie) => cookie.name === cookieName);
+async function clearSpecificCookie(page, cookieName) {
+  const cookies = await page.cookies();
+  const cookieToDelete = cookies.find((cookie) => cookie.name === cookieName);
 
-//   if (cookieToDelete) {
-//     await page.deleteCookie(cookieToDelete);
-//     page.re;
-//     console.log(`Cookie "${cookieName}" cleared.`);
-//   } else {
-//     console.log(`Cookie "${cookieName}" not found.`);
-//   }
-// }
+  if (cookieToDelete) {
+    await page.deleteCookie(cookieToDelete);
+    page.re;
+    console.log(`Cookie "${cookieName}" cleared.`);
+  } else {
+    console.log(`Cookie "${cookieName}" not found.`);
+  }
+}
 
 // Helper function for delay
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -88,26 +88,26 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     await delay(2000);
 
     // Handle cookies if needed
-    const cookies = await page.cookies();
-    const sessionCookie = cookies.find((cookie) => cookie.name === 'session_key');
-    if (sessionCookie) {
-      await page.setCookie(...cookies.filter((cookie) => cookie.name !== 'session_key'));
-      console.log('Session cookie cleared.');
-    }
+    // const cookies = await page.cookies();
+    // const sessionCookie = cookies.find((cookie) => cookie.name === 'session_key');
+    // if (sessionCookie) {
+    //   await page.setCookie(...cookies.filter((cookie) => cookie.name !== 'session_key'));
+    //   console.log('Session cookie cleared.');
+    // }
 
     // Handle OK button
     const okButtonClicked = await clickButtonByText(page, 'OK');
     if (!okButtonClicked) console.log('OK button not found.');
 
-    await delay(1000);
+    // await delay(1000);
 
-    const logoutButtonClicked = await clickButtonByText(page, 'Logout');
-    if (!logoutButtonClicked) console.log('Logout button not found.');
+    // const logoutButtonClicked = await clickButtonByText(page, 'Logout');
+    // if (!logoutButtonClicked) console.log('Logout button not found.');
 
-    await delay(1000);
+    // await delay(1000);
 
-    const logout2ButtonClicked = await clickButtonByText(page, 'Logout');
-    if (!logout2ButtonClicked) console.log('Logout2 button not found.');
+    // const logout2ButtonClicked = await clickButtonByText(page, 'Logout');
+    // if (!logout2ButtonClicked) console.log('Logout2 button not found.');
 
     // Fill user ID
     const loginInputSelector = 'input[placeholder="Please enter player ID here"]';
