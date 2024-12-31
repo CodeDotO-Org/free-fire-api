@@ -84,9 +84,9 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     await page.goto(url, { waitUntil: 'domcontentloaded' });
 
     // Clear the specific cookie by name
-    await clearSpecificCookie(page, 'session_key');
+    // await clearSpecificCookie(page, 'session_key');
 
-    await delay(2000);
+    // await delay(2000);
 
     // Handle cookies if needed
     // const cookies = await page.cookies();
@@ -101,13 +101,13 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     if (!okButtonClicked) console.log('OK button not found.');
 
     // Make an API request from the browser context
-    // await page.evaluate(async () => {
-    //   await fetch('https://shop.garena.my/api/auth/logout');
-    // });
+    await page.evaluate(async () => {
+      await fetch('https://shop.garena.my/api/auth/logout');
+    });
 
-    // await delay(1000);
+    await delay(1000);
 
-    // await page.reload({ waitUntil: 'networkidle2' });
+    await page.reload({ waitUntil: 'networkidle2' });
 
     await delay(1000);
 
