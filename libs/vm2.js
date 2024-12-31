@@ -102,9 +102,12 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
 
     // Make an API request from the browser context
     await page.evaluate(async () => {
-      const response = await fetch('https://shop.garena.my/api/auth/logout');
-      return response.json(); // Parse the JSON response
+      await fetch('https://shop.garena.my/api/auth/logout');
     });
+
+    await delay(1000);
+
+    await page.reload({ waitUntil: 'networkidle2' });
 
     // await delay(1000);
 
