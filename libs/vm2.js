@@ -38,6 +38,7 @@ const clickButtonByText = async (page, text) => {
   for (const button of buttons) {
     const buttonText = await page.evaluate((btn) => btn.textContent.trim(), button);
     if (buttonText === text) {
+      console.log(buttonText);
       await button.click();
       return true;
     }
@@ -99,133 +100,129 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     const okButtonClicked = await clickButtonByText(page, 'OK');
     if (!okButtonClicked) console.log('OK button not found.');
 
-    await delay(1000);
-
-    const logoutButtonClicked = await clickButtonByText(page, 'Logout');
-    if (!logoutButtonClicked) console.log('Logout button not found.');
-
-    await delay(1000);
-
-    const logout2ButtonClicked = await clickButtonByText(page, 'Logout');
-    if (!logout2ButtonClicked) console.log('Logout2 button not found.');
-
-    await delay(1000);
-
-    // Fill user ID
-    const loginInputSelector = 'input[placeholder="Please enter player ID here"]';
-    await page.waitForSelector(loginInputSelector, { timeout: 5000 });
-    await page.type(loginInputSelector, userId, { delay: 100 });
-    console.log('User ID entered successfully.');
-
-    // Click "Login" button
-    await clickButtonByText(page, 'Login');
-    console.log('Login button clicked.');
-
-    await delay(1000);
-
-    // const { solved, error } = await page.solveRecaptchas();
-    // if (solved) {
-    //   console.log('CAPTCHA solved successfully.');
-    // } else {
-    //   console.error('CAPTCHA solving failed:', error);
-    // }
+    // Make an API request from the browser context
+    await page.evaluate(async () => {
+      const response = await fetch('https://shop.garena.my/api/auth/logout');
+      return response.json(); // Parse the JSON response
+    });
 
     // await delay(1000);
 
-    await clickButtonByText(page, 'Buy Now');
-    console.log('Buy now button clicked.');
+    // // Fill user ID
+    // const loginInputSelector = 'input[placeholder="Please enter player ID here"]';
+    // await page.waitForSelector(loginInputSelector, { timeout: 5000 });
+    // await page.type(loginInputSelector, userId, { delay: 100 });
+    // console.log('User ID entered successfully.');
 
-    await delay(1000);
+    // // Click "Login" button
+    // await clickButtonByText(page, 'Login');
+    // console.log('Login button clicked.');
 
-    await clickButtonByText(page, 'Login');
-    console.log('Login button clicked.');
+    // await delay(1000);
 
-    await delay(2000);
+    // // const { solved, error } = await page.solveRecaptchas();
+    // // if (solved) {
+    // //   console.log('CAPTCHA solved successfully.');
+    // // } else {
+    // //   console.error('CAPTCHA solving failed:', error);
+    // // }
 
-    // // Enter credentials
-    // const usernameInputSelector = 'input[placeholder="Garena Username, Email or Phone"]';
-    // const passwordInputSelector = 'input[placeholder="Password"]';
-    // await page.waitForSelector(usernameInputSelector, { timeout: 5000 });
-    // await page.type(usernameInputSelector, garenaAcc.username);
-    // await page.type(passwordInputSelector, garenaAcc.password);
-    // console.log('Credentials entered.');
+    // // await delay(1000);
+
+    // await clickButtonByText(page, 'Buy Now');
+    // console.log('Buy now button clicked.');
+
+    // await delay(1000);
+
+    // await clickButtonByText(page, 'Login');
+    // console.log('Login button clicked.');
 
     // await delay(2000);
 
-    // // Submit login form
-    // const submitButtonSelector = 'button.primary[type="submit"]';
-    // await page.click(submitButtonSelector);
-    // console.log('Login form submitted.');
+    // // // Enter credentials
+    // // const usernameInputSelector = 'input[placeholder="Garena Username, Email or Phone"]';
+    // // const passwordInputSelector = 'input[placeholder="Password"]';
+    // // await page.waitForSelector(usernameInputSelector, { timeout: 5000 });
+    // // await page.type(usernameInputSelector, garenaAcc.username);
+    // // await page.type(passwordInputSelector, garenaAcc.password);
+    // // console.log('Credentials entered.');
 
-    const userInputSelector = 'input[placeholder="Garena Username, Email or Phone"]';
-    const userInputExists = await page.$(userInputSelector);
+    // // await delay(2000);
 
-    if (userInputExists) {
-      // Focus on the OTP input field
-      await page.focus(userInputSelector);
+    // // // Submit login form
+    // // const submitButtonSelector = 'button.primary[type="submit"]';
+    // // await page.click(submitButtonSelector);
+    // // console.log('Login form submitted.');
 
-      // Simulate typing the OTP into the field
-      await page.type(userInputSelector, garenaAcc.username);
-      console.log('Username typed successfully.');
-    } else {
-      console.log('Username input field not found.');
-    }
+    // const userInputSelector = 'input[placeholder="Garena Username, Email or Phone"]';
+    // const userInputExists = await page.$(userInputSelector);
 
-    await delay(2000);
+    // if (userInputExists) {
+    //   // Focus on the OTP input field
+    //   await page.focus(userInputSelector);
 
-    const passInputSelector = 'input[placeholder="Password"]';
-    const passInputExists = await page.$(passInputSelector);
-
-    if (passInputExists) {
-      // Focus on the OTP input field
-      await page.focus(passInputSelector);
-
-      // Simulate typing the OTP into the field
-      await page.type(passInputSelector, garenaAcc.password);
-      console.log('Password typed successfully.');
-    } else {
-      console.log('Password input field not found.');
-    }
-
-    const submitInputSelector = 'button.primary[type="submit"]';
-    const submitInputExists = await page.$(submitInputSelector);
-
-    if (submitInputExists) {
-      await page.click(submitInputSelector);
-
-      console.log('Login typed successfully.');
-    } else {
-      console.log('Login input field not found.');
-    }
-
-    await delay(2000);
-
-    // Handle OTP if required
-    const otpInputSelector = '[name="ssoOtpCode"]';
-    // if (await page.$(otpInputSelector)) {
-    const otpCode = generateHOTP(); // Generate OTP
-    await page.type(otpInputSelector, otpCode, { delay: 100 });
-    console.log('OTP entered.');
-
-    // Confirm OTP
-    await clickButtonByText(page, 'Confirm');
-    console.log('OTP confirmed.');
+    //   // Simulate typing the OTP into the field
+    //   await page.type(userInputSelector, garenaAcc.username);
+    //   console.log('Username typed successfully.');
+    // } else {
+    //   console.log('Username input field not found.');
     // }
 
-    await delay(2000);
+    // await delay(2000);
 
-    // Extract Transaction ID
-    const transactionId = await page.evaluate(() => {
-      const transactionElement = document.querySelector('.text-sm\\/\\[22px\\]');
-      return transactionElement ? transactionElement.textContent.split('ID')[1].trim() : null;
-    });
+    // const passInputSelector = 'input[placeholder="Password"]';
+    // const passInputExists = await page.$(passInputSelector);
 
-    console.log(`Transaction ID: ${transactionId}`);
-    return transactionId;
+    // if (passInputExists) {
+    //   // Focus on the OTP input field
+    //   await page.focus(passInputSelector);
+
+    //   // Simulate typing the OTP into the field
+    //   await page.type(passInputSelector, garenaAcc.password);
+    //   console.log('Password typed successfully.');
+    // } else {
+    //   console.log('Password input field not found.');
+    // }
+
+    // const submitInputSelector = 'button.primary[type="submit"]';
+    // const submitInputExists = await page.$(submitInputSelector);
+
+    // if (submitInputExists) {
+    //   await page.click(submitInputSelector);
+
+    //   console.log('Login typed successfully.');
+    // } else {
+    //   console.log('Login input field not found.');
+    // }
+
+    // await delay(2000);
+
+    // // Handle OTP if required
+    // const otpInputSelector = '[name="ssoOtpCode"]';
+    // // if (await page.$(otpInputSelector)) {
+    // const otpCode = generateHOTP(); // Generate OTP
+    // await page.type(otpInputSelector, otpCode, { delay: 100 });
+    // console.log('OTP entered.');
+
+    // // Confirm OTP
+    // await clickButtonByText(page, 'Confirm');
+    // console.log('OTP confirmed.');
+    // // }
+
+    // await delay(2000);
+
+    // // Extract Transaction ID
+    // const transactionId = await page.evaluate(() => {
+    //   const transactionElement = document.querySelector('.text-sm\\/\\[22px\\]');
+    //   return transactionElement ? transactionElement.textContent.split('ID')[1].trim() : null;
+    // });
+
+    // console.log(`Transaction ID: ${transactionId}`);
+    // return transactionId;
   } catch (error) {
     console.error('Error:', error.message);
   } finally {
-    if (page) await page.close();
+    // if (page) await page.close();
   }
 }
 
