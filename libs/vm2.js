@@ -109,119 +109,119 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
 
     await page.reload({ waitUntil: 'networkidle2' });
 
-    // await delay(1000);
+    await delay(1000);
 
-    // // Fill user ID
-    // const loginInputSelector = 'input[placeholder="Please enter player ID here"]';
-    // await page.waitForSelector(loginInputSelector, { timeout: 5000 });
-    // await page.type(loginInputSelector, userId, { delay: 100 });
-    // console.log('User ID entered successfully.');
+    // Fill user ID
+    const loginInputSelector = 'input[placeholder="Please enter player ID here"]';
+    await page.waitForSelector(loginInputSelector, { timeout: 5000 });
+    await page.type(loginInputSelector, userId, { delay: 100 });
+    console.log('User ID entered successfully.');
 
-    // // Click "Login" button
-    // await clickButtonByText(page, 'Login');
-    // console.log('Login button clicked.');
+    // Click "Login" button
+    await clickButtonByText(page, 'Login');
+    console.log('Login button clicked.');
 
-    // await delay(1000);
+    await delay(1000);
 
-    // // const { solved, error } = await page.solveRecaptchas();
-    // // if (solved) {
-    // //   console.log('CAPTCHA solved successfully.');
-    // // } else {
-    // //   console.error('CAPTCHA solving failed:', error);
-    // // }
-
-    // // await delay(1000);
-
-    // await clickButtonByText(page, 'Buy Now');
-    // console.log('Buy now button clicked.');
+    // const { solved, error } = await page.solveRecaptchas();
+    // if (solved) {
+    //   console.log('CAPTCHA solved successfully.');
+    // } else {
+    //   console.error('CAPTCHA solving failed:', error);
+    // }
 
     // await delay(1000);
 
-    // await clickButtonByText(page, 'Login');
-    // console.log('Login button clicked.');
+    await clickButtonByText(page, 'Buy Now');
+    console.log('Buy now button clicked.');
+
+    await delay(1000);
+
+    await clickButtonByText(page, 'Login');
+    console.log('Login button clicked.');
+
+    await delay(2000);
+
+    // // Enter credentials
+    // const usernameInputSelector = 'input[placeholder="Garena Username, Email or Phone"]';
+    // const passwordInputSelector = 'input[placeholder="Password"]';
+    // await page.waitForSelector(usernameInputSelector, { timeout: 5000 });
+    // await page.type(usernameInputSelector, garenaAcc.username);
+    // await page.type(passwordInputSelector, garenaAcc.password);
+    // console.log('Credentials entered.');
 
     // await delay(2000);
 
-    // // // Enter credentials
-    // // const usernameInputSelector = 'input[placeholder="Garena Username, Email or Phone"]';
-    // // const passwordInputSelector = 'input[placeholder="Password"]';
-    // // await page.waitForSelector(usernameInputSelector, { timeout: 5000 });
-    // // await page.type(usernameInputSelector, garenaAcc.username);
-    // // await page.type(passwordInputSelector, garenaAcc.password);
-    // // console.log('Credentials entered.');
+    // // Submit login form
+    // const submitButtonSelector = 'button.primary[type="submit"]';
+    // await page.click(submitButtonSelector);
+    // console.log('Login form submitted.');
 
-    // // await delay(2000);
+    const userInputSelector = 'input[placeholder="Garena Username, Email or Phone"]';
+    const userInputExists = await page.$(userInputSelector);
 
-    // // // Submit login form
-    // // const submitButtonSelector = 'button.primary[type="submit"]';
-    // // await page.click(submitButtonSelector);
-    // // console.log('Login form submitted.');
+    if (userInputExists) {
+      // Focus on the OTP input field
+      await page.focus(userInputSelector);
 
-    // const userInputSelector = 'input[placeholder="Garena Username, Email or Phone"]';
-    // const userInputExists = await page.$(userInputSelector);
+      // Simulate typing the OTP into the field
+      await page.type(userInputSelector, garenaAcc.username);
+      console.log('Username typed successfully.');
+    } else {
+      console.log('Username input field not found.');
+    }
 
-    // if (userInputExists) {
-    //   // Focus on the OTP input field
-    //   await page.focus(userInputSelector);
+    await delay(2000);
 
-    //   // Simulate typing the OTP into the field
-    //   await page.type(userInputSelector, garenaAcc.username);
-    //   console.log('Username typed successfully.');
-    // } else {
-    //   console.log('Username input field not found.');
+    const passInputSelector = 'input[placeholder="Password"]';
+    const passInputExists = await page.$(passInputSelector);
+
+    if (passInputExists) {
+      // Focus on the OTP input field
+      await page.focus(passInputSelector);
+
+      // Simulate typing the OTP into the field
+      await page.type(passInputSelector, garenaAcc.password);
+      console.log('Password typed successfully.');
+    } else {
+      console.log('Password input field not found.');
+    }
+
+    const submitInputSelector = 'button.primary[type="submit"]';
+    const submitInputExists = await page.$(submitInputSelector);
+
+    if (submitInputExists) {
+      await page.click(submitInputSelector);
+
+      console.log('Login typed successfully.');
+    } else {
+      console.log('Login input field not found.');
+    }
+
+    await delay(2000);
+
+    // Handle OTP if required
+    const otpInputSelector = '[name="ssoOtpCode"]';
+    // if (await page.$(otpInputSelector)) {
+    const otpCode = generateHOTP(); // Generate OTP
+    await page.type(otpInputSelector, otpCode, { delay: 100 });
+    console.log('OTP entered.');
+
+    // Confirm OTP
+    await clickButtonByText(page, 'Confirm');
+    console.log('OTP confirmed.');
     // }
 
-    // await delay(2000);
+    await delay(2000);
 
-    // const passInputSelector = 'input[placeholder="Password"]';
-    // const passInputExists = await page.$(passInputSelector);
+    // Extract Transaction ID
+    const transactionId = await page.evaluate(() => {
+      const transactionElement = document.querySelector('.text-sm\\/\\[22px\\]');
+      return transactionElement ? transactionElement.textContent.split('ID')[1].trim() : null;
+    });
 
-    // if (passInputExists) {
-    //   // Focus on the OTP input field
-    //   await page.focus(passInputSelector);
-
-    //   // Simulate typing the OTP into the field
-    //   await page.type(passInputSelector, garenaAcc.password);
-    //   console.log('Password typed successfully.');
-    // } else {
-    //   console.log('Password input field not found.');
-    // }
-
-    // const submitInputSelector = 'button.primary[type="submit"]';
-    // const submitInputExists = await page.$(submitInputSelector);
-
-    // if (submitInputExists) {
-    //   await page.click(submitInputSelector);
-
-    //   console.log('Login typed successfully.');
-    // } else {
-    //   console.log('Login input field not found.');
-    // }
-
-    // await delay(2000);
-
-    // // Handle OTP if required
-    // const otpInputSelector = '[name="ssoOtpCode"]';
-    // // if (await page.$(otpInputSelector)) {
-    // const otpCode = generateHOTP(); // Generate OTP
-    // await page.type(otpInputSelector, otpCode, { delay: 100 });
-    // console.log('OTP entered.');
-
-    // // Confirm OTP
-    // await clickButtonByText(page, 'Confirm');
-    // console.log('OTP confirmed.');
-    // // }
-
-    // await delay(2000);
-
-    // // Extract Transaction ID
-    // const transactionId = await page.evaluate(() => {
-    //   const transactionElement = document.querySelector('.text-sm\\/\\[22px\\]');
-    //   return transactionElement ? transactionElement.textContent.split('ID')[1].trim() : null;
-    // });
-
-    // console.log(`Transaction ID: ${transactionId}`);
-    // return transactionId;
+    console.log(`Transaction ID: ${transactionId}`);
+    return transactionId;
   } catch (error) {
     console.error('Error:', error.message);
   } finally {
