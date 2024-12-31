@@ -1,33 +1,33 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
+// const RecaptchaPlugin = require('puppeteer-extra-plugin-recaptcha');
 const { generateHOTP } = require('./garena'); // Ensure this is implemented correctly
 const { garenaAcc } = require('../utilities/dev'); // Ensure credentials are correct
 
 // Configure Puppeteer with plugins
 puppeteer.use(StealthPlugin());
-puppeteer.use(
-  RecaptchaPlugin({
-    provider: {
-      id: '2captcha',
-      token: '3b36f1051de5ba74781c5522be886e8b', // Replace with your actual 2Captcha API key
-    },
-    visualFeedback: true, // Enables visual feedback for reCAPTCHA handling
-  })
-);
+// puppeteer.use(
+//   RecaptchaPlugin({
+//     provider: {
+//       id: '2captcha',
+//       token: '3b36f1051de5ba74781c5522be886e8b', // Replace with your actual 2Captcha API key
+//     },
+//     visualFeedback: true, // Enables visual feedback for reCAPTCHA handling
+//   })
+// );
 
-async function clearSpecificCookie(page, cookieName) {
-  const cookies = await page.cookies();
-  const cookieToDelete = cookies.find((cookie) => cookie.name === cookieName);
+// async function clearSpecificCookie(page, cookieName) {
+//   const cookies = await page.cookies();
+//   const cookieToDelete = cookies.find((cookie) => cookie.name === cookieName);
 
-  if (cookieToDelete) {
-    await page.deleteCookie(cookieToDelete);
-    page.re;
-    console.log(`Cookie "${cookieName}" cleared.`);
-  } else {
-    console.log(`Cookie "${cookieName}" not found.`);
-  }
-}
+//   if (cookieToDelete) {
+//     await page.deleteCookie(cookieToDelete);
+//     page.re;
+//     console.log(`Cookie "${cookieName}" cleared.`);
+//   } else {
+//     console.log(`Cookie "${cookieName}" not found.`);
+//   }
+// }
 
 // Helper function for delay
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -98,6 +98,16 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     // Handle OK button
     const okButtonClicked = await clickButtonByText(page, 'OK');
     if (!okButtonClicked) console.log('OK button not found.');
+
+    await delay(1000);
+
+    const logoutButtonClicked = await clickButtonByText(page, 'Logout');
+    if (!logoutButtonClicked) console.log('Logout button not found.');
+
+    await delay(1000);
+
+    const logout2ButtonClicked = await clickButtonByText(page, 'Logout');
+    if (!logout2ButtonClicked) console.log('Logout2 button not found.');
 
     // Fill user ID
     const loginInputSelector = 'input[placeholder="Please enter player ID here"]';
