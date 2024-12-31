@@ -121,7 +121,7 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     await clickButtonByText(page, 'Login');
     console.log('Login button clicked.');
 
-    await delay(1000);
+    await delay(2000);
 
     // const { solved, error } = await page.solveRecaptchas();
     // if (solved) {
