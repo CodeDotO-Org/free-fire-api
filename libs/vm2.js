@@ -84,9 +84,9 @@ async function freeFireApi2(app = '100067', item = '44111', userId = '9736578480
     await page.goto(url, { waitUntil: 'domcontentloaded' });
 
     // Clear the specific cookie by name
-    // await clearSpecificCookie(page, 'session_key');
+    await clearSpecificCookie(page, 'session_key');
 
-    // await delay(2000);
+    await delay(2000);
 
     // Handle cookies if needed
     // const cookies = await page.cookies();
