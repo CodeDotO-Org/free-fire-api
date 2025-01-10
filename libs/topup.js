@@ -1,7 +1,4 @@
-// const { freeFireApi } = require('./vm');
 const { freeFireApi2 } = require('./vm2');
-// const { freeFireApi4 } = require('./vm4');
-// const { freeFireApi3 } = require('./vm3');
 
 async function topupFreeFire(req, res) {
   try {
